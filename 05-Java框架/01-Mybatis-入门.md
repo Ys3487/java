@@ -207,7 +207,7 @@ public class Test1 {
         SqlSessionFactory factory = builder.build(in);
         //4.使用 SqlSessionFactory 生产 SqlSession 对象
         SqlSession session = factory.openSession();
-        //5.使用 SqlSession 创建 dao 接口的代理对象
+        //5.使用 SqlSession 创建 dao 接口的代理对象  无需书写接口的实现类了！！
         IUserDao userDao = session.getMapper(IUserDao.class);
         //6.使用代理对象执行查询所有方法
         List<User> users = userDao.findAll();
@@ -231,12 +231,19 @@ public class Test1 {
 
 在持久层接口添加注解：
 ```java
+package com.mine.dao;
+
+import com.mine.model.User;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+
 public interface IUserDao {
     /**
-    * 查询所有用户
-    * @return */
+     * 查询所有用户
+     * @return */
     @Select("select * from user")
-    List<User> findAll(); 
+    List<User> findAll();
 }
 ```
 
